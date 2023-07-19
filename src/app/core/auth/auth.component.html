@@ -1,0 +1,24 @@
+<div class="auth-page">
+  <h1 class="title">{{ title }}</h1>
+  <p class="title">
+    <a *ngIf="authType === 'register'" [routerLink]="['/login']">Have an account?</a>
+    <a *ngIf="authType === 'login'" [routerLink]="['/register']">Need an account?</a>
+  </p>
+  <app-list-errors [errors]="errors"></app-list-errors>
+  <form [formGroup]="authForm" (ngSubmit)="submitForm()">
+    <fieldset class="fieldset-formgroup" [disabled]="isSubmitting">
+      <mat-form-field *ngIf="authType === 'register'" class="custom-input">
+        <input matInput formControlName="email" placeholder="Username" />
+      </mat-form-field>
+      <mat-form-field class="custom-input">
+        <input matInput formControlName="username" placeholder="Email" />
+      </mat-form-field>
+      <mat-form-field class="custom-input">
+        <input matInput formControlName="password" placeholder="Password" type="password" />
+      </mat-form-field>
+      <button mat-raised-button color="primary" [disabled]="!authForm.valid" type="submit">
+        {{ title }}
+      </button>
+    </fieldset>
+  </form>
+</div>

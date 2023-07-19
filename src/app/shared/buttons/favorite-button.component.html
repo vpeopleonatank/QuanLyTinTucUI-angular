@@ -1,0 +1,11 @@
+<button
+  mat-button color="primary"
+  [ngClass]="{
+    disabled: isSubmitting,
+  }"
+  (click)="toggleFavorite()"
+>
+  <i class="ion-heart"></i>
+<mat-icon aria-hidden="false" fontIcon="favorite"></mat-icon>
+  <ng-content></ng-content>
+</button>

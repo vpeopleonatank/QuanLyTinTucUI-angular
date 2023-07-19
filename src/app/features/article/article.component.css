@@ -1,0 +1,19 @@
+.side-action {
+  display: flex;
+  align-items: center;
+}
+
+.icon-link {
+  display: inline-flex;
+  align-items: center;
+  /* text-decoration: none; */
+  color: #000000;
+}
+
+.icon-link:not(:last-child) {
+  margin-right: 13px;
+}
+
+.icon {
+  margin-right: 5px;
+}

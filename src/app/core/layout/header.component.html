@@ -1,0 +1,44 @@
+<header>
+  <mat-toolbar color="primary">
+
+    <mat-toolbar-row class="toolbar-row" *appShowAuthed="false">
+      <span class="example-spacer"></span>
+
+      <span class="header-item" routerLink="/">
+        <!-- <mat-icon class="header-icon">home</mat-icon> -->
+        <span class="logo-text">Home</span>
+      </span>
+      <span class="header-item" routerLink="/login" routerLinkActive="active">
+        <span class="logo-text">Sign in</span>
+      </span>
+      <span class="header-item" routerLink="/register" routerLinkActive="active">
+        <span class="logo-text">Sign up</span>
+      </span>
+    </mat-toolbar-row>
+
+
+    <mat-toolbar-row class="toolbar-row" *appShowAuthed="true">
+      <span class="example-spacer"></span>
+
+      <span class="header-item" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <span class="logo-text">Home</span>
+      </span>
+      <span class="header-item" routerLink="/editor" routerLinkActive="active">
+        <mat-icon class="header-icon">compose</mat-icon>
+        <span class="logo-text">New Article</span>
+      </span>
+      <span class="header-item" routerLink="/settings" routerLinkActive="active">
+        <mat-icon class="header-icon">setting</mat-icon>
+        <span class="logo-text">Settings</span>
+      </span>
+
+      <!-- <li class="nav-item" *ngIf="currentUser$ | async as currentUser"> -->
+      <!--   <a class="nav-link" [routerLink]="['/profile', currentUser.username]" routerLinkActive="active"> -->
+      <!--     <img [src]="currentUser.image" *ngIf="currentUser.image" class="user-pic" /> -->
+      <!--     {{ currentUser.username }} -->
+      <!--   </a> -->
+      <!-- </li> -->
+    </mat-toolbar-row>
+
+  </mat-toolbar>
+</header>

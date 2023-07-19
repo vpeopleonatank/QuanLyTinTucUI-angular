@@ -1,0 +1,39 @@
+<div class="article-preview">
+  <!-- <app-article-meta [article]="article"> -->
+  <!-- </app-article-meta> -->
+  <div *ngIf="article">
+    <mat-card>
+      <mat-card-header>
+        <!-- <img mat-card-avatar [src]="article.author.image" (click)="navigateToLink('/')" class="clickable-image" /> -->
+
+        <!-- <mat-icon mat-card-avatar svgIcon="{{article.author.image}}"></mat-icon> -->
+        <!-- <mat-card-title> -->
+          <!-- {{ article.author.username }} -->
+        <!-- </mat-card-title> -->
+        <mat-card-subtitle>
+          {{ article.createdAt | date : "longDate" }}
+        </mat-card-subtitle>
+
+      </mat-card-header>
+    </mat-card>
+  </div>
+
+
+  <a [routerLink]="['/article', article.slug]" class="card-link">
+
+    <mat-card-content>
+      <h1 class="mat-h1">{{ article.title }}</h1>
+      <p>{{ article.description }}</p>
+
+      <div class="bottom-card-content">
+        <span style="align-items: center; display: flex;">Read more...</span>
+        <mat-chip-listbox style="margin-left: auto;">
+          <mat-chip *ngFor="let tag of article.tagList">{{ tag }}</mat-chip>
+        </mat-chip-listbox>
+      </div>
+    </mat-card-content>
+
+  </a>
+
+</div>
+<mat-divider></mat-divider>

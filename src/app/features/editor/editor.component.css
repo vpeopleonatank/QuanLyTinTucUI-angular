@@ -1,0 +1,28 @@
+.editor-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 600px;
+}
+
+.fieldset-container {
+  border: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-field:not(:last-child) {
+  margin-bottom: 16px;
+}
+
+.custom-input > textarea {
+  /* flex: 1; */
+  /* height: ; */
+}

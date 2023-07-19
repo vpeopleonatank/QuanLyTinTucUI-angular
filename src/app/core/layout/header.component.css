@@ -1,0 +1,24 @@
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.toolbar-row {
+  display: flex;
+  margin: auto;
+}
+
+.header-item {
+  display: flex;
+  /* align-items: center; */
+  cursor: pointer;
+  margin: auto;
+}
+.header-item:not(:last-child) {
+  margin-right: 15px;
+}
+
+
+.header-icon {
+  margin-right: 3px;
+}
+

@@ -1,0 +1,35 @@
+<div class="editor-page">
+  <app-list-errors [errors]="errors"></app-list-errors>
+  <form [formGroup]="articleForm" class="form-container">
+    <fieldset [disabled]="isSubmitting" class="fieldset-container">
+      <mat-form-field class="form-field">
+        <mat-label>Title</mat-label>
+        <input matInput formControlName="title" placeholder="Enter the title" type="text">
+      </mat-form-field>
+
+      <mat-form-field class="form-field">
+        <mat-label>Author</mat-label>
+        <input matInput formControlName="description" placeholder="Enter the author" type="text">
+      </mat-form-field>
+
+      <mat-form-field class="form-field custom-input">
+        <mat-label>Content</mat-label>
+        <textarea matInput formControlName="body" rows=8 placeholder="Enter the content"></textarea>
+      </mat-form-field>
+
+      <mat-form-field class="form-field">
+        <mat-label>Category</mat-label>
+        <input matInput placeholder="Enter tags" [formControl]="tagField" (keyup.enter)="addTag()">
+        <mat-chip-listbox *ngFor="let tag of tagList">
+          <mat-chip-option (click)="removeTag(tag)">
+            {{ tag }}
+          </mat-chip-option>
+        </mat-chip-listbox>
+      </mat-form-field>
+      <button mat-raised-button color="primary" type="button" (click)="submitForm()">
+        Publish Article
+      </button>
+
+    </fieldset>
+  </form>
+</div>

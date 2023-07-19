@@ -1,0 +1,23 @@
+.clickable-image {
+  cursor: pointer;
+}
+
+.favorite-button {
+  margin-left: auto;
+}
+
+.bottom-card-content {
+  display: flex;
+}
+
+.card-link {
+  /* display: inline-block; */
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+
+.article-preview {
+  margin-bottom: 8px;
+}
