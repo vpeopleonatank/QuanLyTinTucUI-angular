@@ -23,13 +23,19 @@
       <span class="header-item" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
         <span class="logo-text">Home</span>
       </span>
-      <span class="header-item" routerLink="/editor" routerLinkActive="active">
+      <span class="header-item" *ngIf="adminRoles.includes(userRole)" routerLink="/editor" routerLinkActive="active">
         <mat-icon class="header-icon">compose</mat-icon>
         <span class="logo-text">New Article</span>
       </span>
-      <span class="header-item" routerLink="/settings" routerLinkActive="active">
-        <mat-icon class="header-icon">setting</mat-icon>
-        <span class="logo-text">Settings</span>
+      <span class="header-item" *ngIf="adminRoles.includes(userRole)" routerLink="/topic-management" routerLinkActive="active">
+        <span class="logo-text">Topic Management</span>
+      </span>
+      <span class="header-item" *ngIf="adminRoles.includes(userRole)" routerLink="/article-management" routerLinkActive="active">
+        <span class="logo-text">Article Management</span>
+      </span>
+      <span class="header-item" >
+        <!-- <mat-icon class="header-icon">setting</mat-icon> -->
+        <span class="logo-text" (click)="logOut()">Log out</span>
       </span>
 
       <!-- <li class="nav-item" *ngIf="currentUser$ | async as currentUser"> -->

@@ -2,6 +2,8 @@ import { inject, NgModule } from '@angular/core';
 import { RouterModule, Routes, PreloadAllModules } from '@angular/router';
 import { UserService } from './core/services/user.service';
 import { map } from 'rxjs/operators';
+import { AuthGuard } from './core/auth/auth.guard';
+import { Role } from './core/models/role.model';
 
 const routes: Routes = [
   {
@@ -24,6 +26,24 @@ const routes: Routes = [
     canActivate: [
       () => inject(UserService).isAuthenticated.pipe(map((isAuth) => !isAuth)),
     ],
+  },
+  {
+    path: 'topic-management',
+    loadComponent: () =>
+      import('./features/topic-management/topic-management.component').then(
+        (m) => m.TopicManagementComponent
+      ),
+    canActivate: [AuthGuard],
+    data: { roles: [Role.Writer, Role.Admin] },
+  },
+  {
+    path: 'article-management',
+    loadComponent: () =>
+      import('./features/article-management/article-management.component').then(
+        (m) => m.ArticleManagementComponent
+      ),
+    canActivate: [AuthGuard],
+    data: { roles: [Role.Writer, Role.Admin] },
   },
   {
     path: 'article/:slug',

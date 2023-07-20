@@ -1,0 +1,19 @@
+<div mat-dialog-title>
+  <h1>Device Form</h1>
+</div>
+
+<form [formGroup]="topicForm" (ngSubmit)="onFormSubmit()">
+  <div mat-dialog-content class="content">
+        <input hidden matInput type="text" formControlName="topicId">
+        <div class="row">
+            <mat-form-field appearance="outline">
+                <mat-label> Topic Name </mat-label>
+                <input matInput type="text" formControlName="topicName">
+            </mat-form-field>
+        </div>
+  </div>
+  <div mat-dialog-actions class="action">
+    <button mat-raised-button type="button" [mat-dialog-close]="false">Huy</button>
+    <button mat-raised-button color="primary" type="submit">{{ data ? 'Cap nhat' : 'Them' }}</button>
+  </div>
+</form>

@@ -1,0 +1,26 @@
+.home-page {
+  display: flex;
+  flex-direction: column;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 10%;
+  padding-right: 10%;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.content-block {
+  display: flex;
+  flex-basis: 75%;
+  flex-direction: column;
+  margin-top: 5rem;
+}
+
+.sidebar {
+  display: flex;
+  flex-basis: 25%;
+}
+

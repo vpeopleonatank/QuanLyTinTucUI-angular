@@ -16,6 +16,7 @@ import { Subject } from 'rxjs';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
+import { Role } from '../models/role.model';
 
 interface AuthForm {
   password: FormControl<string>;
@@ -102,7 +103,7 @@ export class AuthComponent implements OnInit, OnDestroy {
           );
 
     observable.pipe(takeUntil(this.destroy$)).subscribe({
-      next: (user) => {
+      next: ({user}) => {
         if (this.authType === 'login') {
           console.log(user);
         }
