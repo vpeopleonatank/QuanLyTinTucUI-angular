@@ -54,6 +54,8 @@ const routes: Routes = [
   },
   {
     path: 'editor',
+    canActivate: [AuthGuard],
+    data: { roles: [Role.Writer, Role.Admin] },
     children: [
       {
         path: '',
@@ -61,7 +63,6 @@ const routes: Routes = [
           import('./features/editor/editor.component').then(
             (m) => m.EditorComponent
           ),
-        canActivate: [() => inject(UserService).isAuthenticated],
       },
       {
         path: ':slug',
@@ -69,7 +70,6 @@ const routes: Routes = [
           import('./features/editor/editor.component').then(
             (m) => m.EditorComponent
           ),
-        canActivate: [() => inject(UserService).isAuthenticated],
       },
     ],
   },

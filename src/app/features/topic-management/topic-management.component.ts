@@ -17,7 +17,6 @@ import { DeleteTopicComponent } from '../delete-topic/delete-topic.component';
   standalone: true,
   imports: [
     CommonModule,
-    MatIconModule,
     MatTableModule,
     MatPaginatorModule,
     MatDialogModule,

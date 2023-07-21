@@ -17,6 +17,14 @@
         <textarea matInput formControlName="body" rows=8 placeholder="Enter the content"></textarea>
       </mat-form-field>
 
+      <mat-form-field class="form-field custom-input">
+        <mat-label>Topic</mat-label>
+        <mat-select formControlName="topicId">
+          <mat-option *ngFor="let val of topics" [value]="val.topicId">{{val.topicName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
       <mat-form-field class="form-field">
         <mat-label>Category</mat-label>
         <input matInput placeholder="Enter tags" [formControl]="tagField" (keyup.enter)="addTag()">
