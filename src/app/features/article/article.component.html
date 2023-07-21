@@ -14,6 +14,19 @@
             {{ article.createdAt | date : "longDate" }}
           </mat-card-subtitle>
 
+          <div class="side-action" *ngIf="canModify">
+            <!--  -->
+              <a class="icon-link" [routerLink]="['/editor', article.slug]">
+                <mat-icon class="icon" fontIcon="edit"></mat-icon>
+                <span>Edit Article</span>
+              </a>
+
+              <button class="icon-link" [ngClass]="{ disabled: isDeleting }" (click)="deleteArticle()">
+                <mat-icon class="icon" fontIcon="edit"></mat-icon>
+                Delete
+              </button>
+          </div>
+
         </mat-card-header>
         <mat-card-content>
           <div [innerHTML]="article.body | markdown | async"></div>

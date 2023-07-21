@@ -17,6 +17,7 @@ import { CommentsService } from 'src/app/core/services/comments.service';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ShowAuthedDirective } from 'src/app/shared/show-authed.directive';
 import { ArticleCommentComponent } from './article-comment/article-comment.component';
+import { Role } from 'src/app/core/models/role.model';
 
 @Component({
   selector: 'app-article',
@@ -47,6 +48,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
 
   commentControl = new FormControl<string>('', { nonNullable: true });
   commentFormErrors: Errors | null = null;
+  adminRoles: string[] = [Role.Admin, Role.Writer];
 
   constructor(
     private readonly route: ActivatedRoute,
@@ -78,8 +80,11 @@ export class ArticleComponent implements OnInit, OnDestroy {
         this.article = article;
         this.comments = comments;
         this.currentUser = currentUser;
-        if (article.author) {
-          this.canModify = currentUser?.username === article.author.username;
+        // if (article.author) {
+        //   this.canModify = currentUser?.username === article.author.username;
+        // }
+        if (currentUser && this.adminRoles.includes(currentUser.role)) {
+          this.canModify = true;
         }
       });
 
