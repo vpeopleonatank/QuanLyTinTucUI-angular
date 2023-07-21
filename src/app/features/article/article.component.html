@@ -8,7 +8,7 @@
           <!-- <img mat-card-avatar [src]="article.author.image" (click)="navigateToLink('/')" class="clickable-image" /> -->
 
           <!-- <mat-card-title> -->
-            <!-- {{ article.author.username }} -->
+          <!-- {{ article.author.username }} -->
           <!-- </mat-card-title> -->
           <mat-card-subtitle>
             {{ article.createdAt | date : "longDate" }}
@@ -19,6 +19,28 @@
           <div [innerHTML]="article.body | markdown | async"></div>
         </mat-card-content>
       </mat-card>
+
+      <div *appShowAuthed="true">
+        <form class="card comment-form" (ngSubmit)="addComment()">
+          <fieldset [disabled]="isSubmitting">
+            <div class="card-block">
+              <textarea class="form-control" placeholder="Write a comment..." rows="3"
+                [formControl]="commentControl"></textarea>
+            </div>
+            <div class="card-footer">
+              <img [src]="currentUser?.image === null ? '' : currentUser?.image" class="comment-author-img" />
+              <button class="btn btn-sm btn-primary" type="submit">
+                Post Comment
+              </button>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+
+      <app-article-comment *ngFor="let comment of comments; trackBy: trackById" [comment]="comment"
+        (delete)="deleteComment(comment)">
+      </app-article-comment>
+
     </div>
   </div>
 </div>

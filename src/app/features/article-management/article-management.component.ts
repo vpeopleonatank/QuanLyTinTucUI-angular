@@ -13,6 +13,7 @@ import { takeUntil } from 'rxjs/internal/operators/takeUntil';
 import { Subject } from 'rxjs/internal/Subject';
 import { MatSort } from '@angular/material/sort';
 import { RouterLink } from '@angular/router';
+import { DeleteArticleComponent } from '../delete-article/delete-article.component';
 
 @Component({
   selector: 'app-article-management',
@@ -81,5 +82,27 @@ export class ArticleManagementComponent implements OnInit {
     this.currentPage = event.pageIndex + 1;
     this.limit = event.pageSize;
     this.runQuery();
+  }
+
+  deleteArticle(data: number) {
+    const dialogRef = this._dialog.open(DeleteArticleComponent, {
+      data,
+    });
+    dialogRef.afterClosed().subscribe({
+      next: (val) => {
+        if (val) {
+          this.articlesService.delete(val)
+            .subscribe({
+              next: () => {
+                this.runQuery();
+
+              },
+              error: () => {
+
+              }
+            })
+        }
+      },
+    });
   }
 }

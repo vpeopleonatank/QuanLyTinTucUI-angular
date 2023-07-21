@@ -1,0 +1,18 @@
+<mat-card>
+  <mat-card-content>
+    {{ comment.body }}
+  </mat-card-content>
+  <mat-card-footer>
+    <a>
+      {{ comment.author.username }}
+    </a>
+    <span class="date-posted">
+      {{ comment.createdAt | date : "longDate" }}
+    </span>
+    <span class="mod-options" *ngIf="canModify$ | async">
+      <button mat-icon-button (click)="delete.emit(true)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </span>
+  </mat-card-footer>
+</mat-card>
