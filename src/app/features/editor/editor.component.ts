@@ -23,6 +23,7 @@ import { TopicListConfig } from 'src/app/core/models/topic-list-config.model';
 import { MatSelectModule } from '@angular/material/select';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { HttpBackend, HttpClient } from '@angular/common/http';
+import { ImageService } from 'src/app/core/services/image.service';
 
 interface ArticleForm {
   title: FormControl<string>;
@@ -72,7 +73,6 @@ export class EditorComponent implements OnInit, OnDestroy {
   selectedFile?: File;
   message: string = '';
   preview: string = '';
-  private httpClient: HttpClient;
 
   constructor(
     private readonly articleService: ArticlesService,
@@ -80,9 +80,8 @@ export class EditorComponent implements OnInit, OnDestroy {
     private readonly router: Router,
     private readonly userService: UserService,
     private readonly topicService: TopicService,
-    private handler: HttpBackend,
+    private readonly imageService: ImageService,
   ) {
-    this.httpClient = new HttpClient(handler);
   }
 
   ngOnInit() {
@@ -100,15 +99,9 @@ export class EditorComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: ([article, { user }]) => {
-          // if (article.author && user.username === article.author.username) {
           this.tagList = article.tagList;
           this.articleForm.patchValue(article);
-          // } else {
-          //   void this.router.navigate(['/']);
-          // }
-          console.log(article.bannerImage);
-          this.httpClient.get('http://localhost:5199/' + article.bannerImage, { responseType: 'blob'})
-          .subscribe((response:Blob) => {
+          this.imageService.getImgFromUrl(article.bannerImage).subscribe((response:Blob) => {
               const reader = new FileReader();
               reader.onload = (e: any) => {
                 this.preview = e.target.result;

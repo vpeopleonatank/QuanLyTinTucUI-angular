@@ -23,6 +23,7 @@
 
     <mat-card-content>
       <h1 class="mat-h1">{{ article.title }}</h1>
+      <img *ngIf="preview" [src]="preview" class="preview"/>
       <p>{{ article.description }}</p>
 
       <div class="bottom-card-content">

@@ -21,3 +21,8 @@
 .article-preview {
   margin-bottom: 8px;
 }
+
+.preview {
+  max-width: 60%;
+  /* vertical-align: middle; */
+}
