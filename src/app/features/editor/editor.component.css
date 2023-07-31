@@ -3,6 +3,7 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
+  flex-direction: column;
 }
 
 .form-container {
@@ -10,6 +11,7 @@
   flex-direction: column;
   width: 100%;
   max-width: 600px;
+  height: 100%;
 }
 
 .fieldset-container {
@@ -18,11 +20,12 @@
   flex-direction: column;
 }
 
+
 .form-field:not(:last-child) {
   margin-bottom: 16px;
 }
 
-.custom-input > textarea {
-  /* flex: 1; */
-  /* height: ; */
+.preview {
+  max-width: 200px;
+  vertical-align: middle;
 }

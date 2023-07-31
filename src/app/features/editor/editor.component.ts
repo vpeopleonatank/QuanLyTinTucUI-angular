@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ListErrorsComponent } from '../../shared/list-errors.component';
-import { NgForOf } from '@angular/common';
+import { NgForOf, NgIf } from '@angular/common';
 import { ArticlesService } from '../../core/services/article.service';
 import { combineLatest, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -21,6 +21,8 @@ import { Topic } from 'src/app/core/models/topic.model';
 import { TopicService } from 'src/app/core/services/topic.service';
 import { TopicListConfig } from 'src/app/core/models/topic-list-config.model';
 import { MatSelectModule } from '@angular/material/select';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { HttpBackend, HttpClient } from '@angular/common/http';
 
 interface ArticleForm {
   title: FormControl<string>;
@@ -42,6 +44,8 @@ interface ArticleForm {
     MatChipsModule,
     MatButtonModule,
     MatSelectModule,
+    MatToolbarModule,
+    NgIf,
   ],
   standalone: true,
 })
@@ -64,14 +68,22 @@ export class EditorComponent implements OnInit, OnDestroy {
     filters: {},
   };
   slug: string = '';
+  selectedFileName: string = '';
+  selectedFile?: File;
+  message: string = '';
+  preview: string = '';
+  private httpClient: HttpClient;
 
   constructor(
     private readonly articleService: ArticlesService,
     private readonly route: ActivatedRoute,
     private readonly router: Router,
     private readonly userService: UserService,
-    private readonly topicService: TopicService
-  ) {}
+    private readonly topicService: TopicService,
+    private handler: HttpBackend,
+  ) {
+    this.httpClient = new HttpClient(handler);
+  }
 
   ngOnInit() {
     this.topicService.query(this.listConfig).subscribe({
@@ -94,6 +106,15 @@ export class EditorComponent implements OnInit, OnDestroy {
           // } else {
           //   void this.router.navigate(['/']);
           // }
+          console.log(article.bannerImage);
+          this.httpClient.get('http://localhost:5199/' + article.bannerImage, { responseType: 'blob'})
+          .subscribe((response:Blob) => {
+              const reader = new FileReader();
+              reader.onload = (e: any) => {
+                this.preview = e.target.result;
+              }
+              reader.readAsDataURL(response);
+            })
         },
         error: (err) => {
           console.log(err);
@@ -132,6 +153,7 @@ export class EditorComponent implements OnInit, OnDestroy {
         .update(this.slug, {
           ...this.articleForm.value,
           tagList: this.tagList,
+          bannerImage: this.selectedFile
         })
         .pipe(takeUntil(this.destroy$))
         .subscribe({
@@ -147,6 +169,7 @@ export class EditorComponent implements OnInit, OnDestroy {
         .create({
           ...this.articleForm.value,
           tagList: this.tagList,
+          bannerImage: this.selectedFile
         })
         .pipe(takeUntil(this.destroy$))
         .subscribe({
@@ -156,6 +179,25 @@ export class EditorComponent implements OnInit, OnDestroy {
             this.isSubmitting = false;
           },
         });
+    }
+  }
+
+  selectFile(event: any): void {
+    this.message = '';
+    this.selectedFileName = '';
+    this.selectedFile = event.target.files[0];
+
+    this.preview = '';
+    if (this.selectedFile) {
+      const reader = new FileReader();
+
+      reader.onload = (e: any) => {
+        this.preview = e.target.result;
+      };
+
+      reader.readAsDataURL(this.selectedFile);
+
+      this.selectedFileName = this.selectedFile.name;
     }
   }
 }

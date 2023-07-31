@@ -11,6 +11,19 @@
         <mat-label>Description</mat-label>
         <input matInput formControlName="description" placeholder="Enter the description" type="text">
       </mat-form-field>
+      <mat-form-field class="form-field">
+        <label>
+          Banner Image
+        </label>
+        <input hidden matInput />
+        <div>
+          <input type="file" id="bannerImageInput" name="bannerImageInput" accept="image/*"
+            (change)=selectFile($event) />
+        </div>
+        <div>
+          <img *ngIf="preview" [src]="preview" class="preview" />
+        </div>
+      </mat-form-field>
 
       <mat-form-field class="form-field custom-input">
         <mat-label>Content</mat-label>

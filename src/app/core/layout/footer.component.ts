@@ -8,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 @Component({
   selector: 'app-layout-footer',
   templateUrl: './footer.component.html',
+  styleUrls: ['./footer.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     DatePipe,

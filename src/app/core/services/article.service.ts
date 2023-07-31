@@ -37,17 +37,34 @@ export class ArticlesService {
   }
 
   create(article: Partial<Article>): Observable<Article> {
+    let formData: FormData = new FormData();
+    formData.append('Article.title', article.title!);
+    formData.append('Article.description', article.description!);
+    formData.append('Article.topicId', article.topicId?.toString()!);
+    formData.append('Article.body', article.body!);
+    formData.append('Article.bannerImage', article.bannerImage!);
+    for (let i = 0; i < article.tagList!.length; i++) {
+      formData.append('Article.tagList', article.tagList![i]);
+    }
+    
     return this.http
-      .post<{ article: Article }>('/articles/', { article: article })
+      .post<{ article: Article }>('/articles/', formData)
       .pipe(map((data) => data.article));
   }
 
   update(slug: string, article: Partial<Article>): Observable<Article> {
+    let formData: FormData = new FormData();
+    formData.append('Article.title', article.title!);
+    formData.append('Article.description', article.description!);
+    formData.append('Article.topicId', article.topicId?.toString()!);
+    formData.append('Article.body', article.body!);
+    formData.append('Article.bannerImage', article.bannerImage!);
+    for (let i = 0; i < article.tagList!.length; i++) {
+      formData.append('Article.tagList', article.tagList![i]);
+    }
+    formData.append('slug', slug);
     return this.http
-      .put<{ article: Article }>(`/articles/`, {
-        slug: slug,
-        article: article,
-      })
+      .put<{ article: Article }>(`/articles/`, formData)
       .pipe(map((data) => data.article));
   }
 
