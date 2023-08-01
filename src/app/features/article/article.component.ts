@@ -18,6 +18,8 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ShowAuthedDirective } from 'src/app/shared/show-authed.directive';
 import { ArticleCommentComponent } from './article-comment/article-comment.component';
 import { Role } from 'src/app/core/models/role.model';
+import { ImageService } from 'src/app/core/services/image.service';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-article',
@@ -32,6 +34,7 @@ import { Role } from 'src/app/core/models/role.model';
     ReactiveFormsModule,
     ShowAuthedDirective,
     ArticleCommentComponent,
+    MatButtonModule,
   ],
   templateUrl: './article.component.html',
   styleUrls: ['./article.component.css'],
@@ -50,13 +53,17 @@ export class ArticleComponent implements OnInit, OnDestroy {
   commentFormErrors: Errors | null = null;
   adminRoles: string[] = [Role.Admin, Role.Writer];
 
+  preview: string = '';
+  previewFormat: string = '';
+
   constructor(
     private readonly route: ActivatedRoute,
     private readonly articleService: ArticlesService,
     // private readonly commentsService: CommentsService,
     private readonly router: Router,
     private readonly userService: UserService,
-    private readonly commentsService: CommentsService
+    private readonly commentsService: CommentsService,
+    private readonly imageService: ImageService
   ) {}
 
   navigateToLink(link: string): void {
@@ -80,6 +87,21 @@ export class ArticleComponent implements OnInit, OnDestroy {
         this.article = article;
         this.comments = comments;
         this.currentUser = currentUser;
+
+        this.imageService
+          .getImgFromUrl(article.bannerImage)
+          .subscribe((response: Blob) => {
+            const reader = new FileReader();
+            if (response.type.indexOf('image') > -1) {
+              this.previewFormat = 'image';
+            } else if (response.type.indexOf('video') > -1) {
+              this.previewFormat = 'video';
+            }
+            reader.onload = (e: any) => {
+              this.preview = e.target.result;
+            };
+            reader.readAsDataURL(response);
+          });
         // if (article.author) {
         //   this.canModify = currentUser?.username === article.author.username;
         // }

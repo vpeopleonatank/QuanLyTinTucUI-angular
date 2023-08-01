@@ -1,0 +1,23 @@
+.comment-card {
+  width: 60%;
+  text-align: left;
+  margin: 1rem auto 1rem auto;
+  border: 1px solid black;
+}
+
+mat-card-footer {
+  display: flex;
+}
+
+mat-card-footer > a {
+  margin-left: 1rem;
+  display: flex;
+  // justify-content: center;
+  align-items: center;
+}
+
+.date-posted {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}

@@ -73,6 +73,7 @@ export class EditorComponent implements OnInit, OnDestroy {
   selectedFile?: File;
   message: string = '';
   preview: string = '';
+  previewFormat: string = '';
 
   constructor(
     private readonly articleService: ArticlesService,
@@ -80,9 +81,8 @@ export class EditorComponent implements OnInit, OnDestroy {
     private readonly router: Router,
     private readonly userService: UserService,
     private readonly topicService: TopicService,
-    private readonly imageService: ImageService,
-  ) {
-  }
+    private readonly imageService: ImageService
+  ) {}
 
   ngOnInit() {
     this.topicService.query(this.listConfig).subscribe({
@@ -101,13 +101,20 @@ export class EditorComponent implements OnInit, OnDestroy {
         next: ([article, { user }]) => {
           this.tagList = article.tagList;
           this.articleForm.patchValue(article);
-          this.imageService.getImgFromUrl(article.bannerImage).subscribe((response:Blob) => {
+          this.imageService
+            .getImgFromUrl(article.bannerImage)
+            .subscribe((response: Blob) => {
               const reader = new FileReader();
+              if (response.type.indexOf('image') > -1) {
+                this.previewFormat = 'image';
+              } else if (response.type.indexOf('video') > -1) {
+                this.previewFormat = 'video';
+              }
               reader.onload = (e: any) => {
                 this.preview = e.target.result;
-              }
+              };
               reader.readAsDataURL(response);
-            })
+            });
         },
         error: (err) => {
           console.log(err);
@@ -141,16 +148,19 @@ export class EditorComponent implements OnInit, OnDestroy {
     // update any single tag
     this.addTag();
 
+    console.log(this.slug);
     if (this.slug) {
       this.articleService
         .update(this.slug, {
           ...this.articleForm.value,
           tagList: this.tagList,
-          bannerImage: this.selectedFile
+          bannerImage: this.selectedFile,
         })
         .pipe(takeUntil(this.destroy$))
         .subscribe({
-          next: (article) => this.router.navigate(['/article/', article.slug]),
+          next: (article) => {
+            this.router.navigate(['/article/', article.slug]);
+          },
           error: (err) => {
             this.errors = err.error;
             this.isSubmitting = false;
@@ -162,7 +172,7 @@ export class EditorComponent implements OnInit, OnDestroy {
         .create({
           ...this.articleForm.value,
           tagList: this.tagList,
-          bannerImage: this.selectedFile
+          bannerImage: this.selectedFile,
         })
         .pipe(takeUntil(this.destroy$))
         .subscribe({
@@ -184,6 +194,11 @@ export class EditorComponent implements OnInit, OnDestroy {
     if (this.selectedFile) {
       const reader = new FileReader();
 
+      if (this.selectedFile.type.indexOf('image') > -1) {
+        this.previewFormat = 'image';
+      } else if (this.selectedFile.type.indexOf('video') > -1) {
+        this.previewFormat = 'video';
+      }
       reader.onload = (e: any) => {
         this.preview = e.target.result;
       };

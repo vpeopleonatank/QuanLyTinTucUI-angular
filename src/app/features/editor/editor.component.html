@@ -17,11 +17,12 @@
         </label>
         <input hidden matInput />
         <div>
-          <input type="file" id="bannerImageInput" name="bannerImageInput" accept="image/*"
+          <input type="file" id="bannerImageInput" name="bannerImageInput" accept="image/*,video/*"
             (change)=selectFile($event) />
         </div>
         <div>
-          <img *ngIf="preview" [src]="preview" class="preview" />
+          <img *ngIf="previewFormat==='image' && preview" [src]="preview" class="preview" />
+        <video [src]="preview" *ngIf="previewFormat==='video' && preview" class="preview" controls></video>
         </div>
       </mat-form-field>
 

@@ -26,13 +26,14 @@ import { ImageService } from 'src/app/core/services/image.service';
     FavoriteButtonComponent,
     MatChipsModule,
     MatDividerModule,
-    NgIf
+    NgIf,
   ],
   standalone: true,
 })
 export class ArticlePreviewComponent implements OnInit {
   @Input() article!: Article;
   preview: string = '';
+  previewFormat: string = '';
 
   constructor(
     private router: Router,
@@ -45,6 +46,11 @@ export class ArticlePreviewComponent implements OnInit {
         .getImgFromUrl(this.article.bannerImage)
         .subscribe((response: Blob) => {
           const reader = new FileReader();
+          if (response.type.indexOf('image') > -1) {
+            this.previewFormat = 'image';
+          } else if (response.type.indexOf('video') > -1) {
+            this.previewFormat = 'video';
+          }
           reader.onload = (e: any) => {
             this.preview = e.target.result;
           };

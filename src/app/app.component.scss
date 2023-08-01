@@ -5,3 +5,10 @@ app-layout-footer {
   // position: absolute;
   // bottom: 0;
 }
+
+.container {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  justify-content: space-between;
+}

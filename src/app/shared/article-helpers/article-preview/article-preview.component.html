@@ -8,7 +8,7 @@
 
         <!-- <mat-icon mat-card-avatar svgIcon="{{article.author.image}}"></mat-icon> -->
         <!-- <mat-card-title> -->
-          <!-- {{ article.author.username }} -->
+        <!-- {{ article.author.username }} -->
         <!-- </mat-card-title> -->
         <mat-card-subtitle>
           {{ article.createdAt | date : "longDate" }}
@@ -23,7 +23,8 @@
 
     <mat-card-content>
       <h1 class="mat-h1">{{ article.title }}</h1>
-      <img *ngIf="preview" [src]="preview" class="preview"/>
+      <img *ngIf="previewFormat==='image' && preview" [src]="preview" class="preview" />
+      <video preload="metadata" [src]="preview" *ngIf="previewFormat==='video' && preview" class="preview" ></video>
       <p>{{ article.description }}</p>
 
       <div class="bottom-card-content">
